@@ -30,7 +30,8 @@ class UserInput(BaseModel):
     income_lpa: Annotated[float, Field(..., gt=0, description='Annual salary of the user in lpa')]
     smoker: Annotated[bool, Field(..., description='Is user a smoker')]
     city: Annotated[str, Field(..., description='The city that the user belongs to')]
-    occupation: Annotated[Literal['retired', 'freelancer', 'student', 'government_job','business_owner', 'unemployed', 'private_job'], Field(..., description='Occupation of the user')]
+    occupation: Annotated[Literal['retired', 'freelancer', 'student', 'government_job',
+       'business_owner', 'unemployed', 'private_job'], Field(..., description='Occupation of the user')]
     
     @computed_field
     @property
@@ -67,6 +68,10 @@ class UserInput(BaseModel):
             return 2
         else:
             return 3
+
+@app.get("/")
+def home():
+    return {"message": "Welcome to FastAPI"}
 
 @app.post('/predict')
 def predict_premium(data: UserInput):
